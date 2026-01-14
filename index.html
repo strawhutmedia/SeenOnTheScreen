@@ -30,6 +30,35 @@
             color: var(--white);
             overflow-x: hidden;
             line-height: 1.6;
+            position: relative;
+        }
+
+        /* Subtle film grain texture */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(255, 255, 255, 0.01) 2px,
+                    rgba(255, 255, 255, 0.01) 4px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(255, 255, 255, 0.01) 2px,
+                    rgba(255, 255, 255, 0.01) 4px
+                );
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.3;
         }
 
         /* Gradient text utility */
@@ -74,6 +103,15 @@
             background: linear-gradient(90deg, var(--orange), var(--light-blue));
             margin-bottom: 2rem;
             border-radius: 2px;
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
+        }
+
+        /* Film strip accent */
+        .section-title::before {
+            content: '🎬';
+            margin-right: 15px;
+            font-size: 0.9em;
+            opacity: 0.8;
         }
 
         /* Hero Section */
@@ -96,9 +134,29 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(ellipse at center, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
-                        radial-gradient(ellipse at 20% 80%, rgba(66, 153, 225, 0.1) 0%, transparent 40%);
+            background:
+                radial-gradient(ellipse at top, rgba(255, 107, 53, 0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at bottom, rgba(66, 153, 225, 0.1) 0%, transparent 50%);
             pointer-events: none;
+        }
+
+        /* Cinematic spotlight effect */
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at center, transparent 0%, transparent 30%, rgba(255, 107, 53, 0.05) 50%, transparent 70%);
+            animation: spotlight 8s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes spotlight {
+            0%, 100% { opacity: 0.3; transform: translateX(-50%) translateY(0); }
+            50% { opacity: 0.6; transform: translateX(-50%) translateY(-5%); }
         }
 
         .hero-content {
@@ -276,7 +334,7 @@
             font-weight: 700;
         }
 
-        /* Scroll indicator */
+        /* Scroll indicator - Cinema style */
         .scroll-indicator {
             margin-top: 5rem;
             padding-bottom: 2rem;
@@ -284,11 +342,19 @@
             animation: bounce 2s infinite;
         }
 
+        .scroll-indicator::before {
+            content: '🎥';
+            display: block;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            opacity: 0.6;
+        }
+
         .scroll-indicator svg {
             display: inline-block;
             width: 30px;
             height: 30px;
-            stroke: var(--gray);
+            stroke: var(--orange);
         }
 
         @keyframes bounce {
@@ -297,13 +363,35 @@
             60% { transform: translateY(-5px); }
         }
 
-        /* Growth Chart Section */
+        /* Growth Chart Section - Cinema Screen Style */
         .chart-container {
-            background: rgba(255, 255, 255, 0.03);
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(26, 39, 68, 0.3) 100%);
             border-radius: 20px;
             padding: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 107, 53, 0.2);
             margin-top: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4),
+                        inset 0 0 40px rgba(255, 107, 53, 0.05);
+            position: relative;
+        }
+
+        .chart-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(255, 255, 255, 0.01) 2px,
+                    rgba(255, 255, 255, 0.01) 4px
+                );
+            pointer-events: none;
+            border-radius: 20px;
         }
 
         .chart-header {
@@ -313,6 +401,8 @@
             margin-bottom: 30px;
             flex-wrap: wrap;
             gap: 20px;
+            position: relative;
+            z-index: 1;
         }
 
         .chart-title {
@@ -329,6 +419,7 @@
             position: relative;
             height: 400px;
             width: 100%;
+            z-index: 1;
         }
 
         .chart-svg {
@@ -386,11 +477,38 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
             overflow: hidden;
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
+        }
+
+        .big-stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg,
+                transparent 0%, transparent 5%,
+                var(--orange) 5%, var(--orange) 10%,
+                transparent 10%, transparent 15%,
+                var(--orange) 15%, var(--orange) 20%,
+                transparent 20%, transparent 25%,
+                var(--orange) 25%, var(--orange) 30%,
+                transparent 30%, transparent 35%,
+                var(--orange) 35%, var(--orange) 40%,
+                transparent 40%
+            );
+            background-size: 200% 100%;
+            opacity: 0.3;
         }
 
         .big-stat-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(255, 107, 53, 0.2);
+        }
+
+        .big-stat-card:hover::before {
+            opacity: 0.6;
         }
 
         .big-stat-card.orange-accent {
@@ -429,10 +547,30 @@
         }
 
         .audience-card {
-            background: rgba(255, 255, 255, 0.03);
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(26, 39, 68, 0.2) 100%);
             border-radius: 20px;
             padding: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 107, 53, 0.15);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .audience-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(255, 107, 53, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(40%, -40%);
+        }
+
+        .audience-card:hover {
+            border-color: rgba(255, 107, 53, 0.3);
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.15);
         }
 
         .audience-card-title {
@@ -442,6 +580,8 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            position: relative;
+            z-index: 1;
         }
 
         .audience-card-title span {
@@ -452,6 +592,8 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
+            position: relative;
+            z-index: 1;
         }
 
         .bar-item {
@@ -524,12 +666,37 @@
         .testimonial-card {
             min-width: 320px;
             max-width: 320px;
-            background: rgba(255, 255, 255, 0.03);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 107, 53, 0.02) 100%);
             border-radius: 20px;
             padding: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 107, 53, 0.15);
             flex-shrink: 0;
             scroll-snap-align: start;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 60%;
+            background: linear-gradient(180deg, transparent, var(--orange), transparent);
+            border-radius: 2px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            border-color: rgba(255, 107, 53, 0.3);
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.1);
+        }
+
+        .testimonial-card:hover::before {
+            opacity: 0.6;
         }
 
         @media (min-width: 769px) {
@@ -573,12 +740,22 @@
             font-weight: 600;
         }
 
-        /* Footer */
+        /* Footer - End Credits Style */
         footer {
             text-align: center;
             padding: 60px 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 2px solid rgba(255, 107, 53, 0.2);
             margin-top: 80px;
+            background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
+            position: relative;
+        }
+
+        footer::before {
+            content: '🎞️';
+            display: block;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            opacity: 0.4;
         }
 
         .footer-logo {
